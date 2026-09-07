@@ -413,6 +413,24 @@ Going early is a media strategy as much as a creative one. Impressions are cheap
 )
 on conflict (slug) do nothing;
 
+-- Story artwork. One editorial SVG per seeded story, served from
+-- public/img/<slug>.svg. Only fills rows that have no image yet, so it
+-- never overwrites a picture an editor sets later.
+update public.brief_articles a
+set featured_image_url = 'https://brief.novasocial.co.uk/img/' || a.slug || '.svg',
+    social_image_url   = coalesce(a.social_image_url, 'https://brief.novasocial.co.uk/og-default.png')
+where a.slug in (
+  'hovis-4m-brand-campaign',
+  'asda-brand-refresh-2026',
+  'instagram-trial-reverse-chronological',
+  'uncommon-wins-british-airways',
+  'what-marketers-need-to-know-ai-search',
+  'retail-media-second-wave',
+  'nova-take-ai-content-missing-the-point',
+  'lidl-christmas-2026-teaser'
+)
+and a.featured_image_url is null;
+
 insert into public.brief_stats (value, caption, category, source_name, source_url, sort_order, status)
 values
   ('£4m', $md$The reported media investment behind Hovis' latest brand campaign, its biggest in over a decade.$md$, 'Campaigns', 'Nova Brief analysis', 'https://brief.novasocial.co.uk/hovis-4m-brand-campaign', 1, 'published'),

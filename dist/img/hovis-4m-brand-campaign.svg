@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" fill="none" aria-label="A loaf of bread cresting a winding hill road with a bicycle wheel, evoking Hovis's nostalgic brand campaign">
+  <rect width="1200" height="675" fill="#FDEDE1"/>
+  <rect x="44" y="44" width="56" height="6" rx="3" fill="#B4652F"/>
+
+  <!-- hill road -->
+  <path d="M-20 560 C 240 560 300 300 560 300 C 860 300 900 560 1240 560" stroke="#E6C3A6" stroke-width="120" stroke-linecap="round"/>
+  <path d="M-20 560 C 240 560 300 300 560 300 C 860 300 900 560 1240 560" stroke="#B4652F" stroke-width="4" stroke-dasharray="2 34" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- bike wheel at the crest -->
+  <g transform="translate(560 300)">
+    <circle r="86" fill="#FBFAF7" stroke="#14141A" stroke-width="10"/>
+    <circle r="12" fill="#14141A"/>
+    <g stroke="#14141A" stroke-width="6" stroke-linecap="round">
+      <line x1="0" y1="0" x2="0" y2="-74"/><line x1="0" y1="0" x2="64" y2="-37"/>
+      <line x1="0" y1="0" x2="64" y2="37"/><line x1="0" y1="0" x2="0" y2="74"/>
+      <line x1="0" y1="0" x2="-64" y2="37"/><line x1="0" y1="0" x2="-64" y2="-37"/>
+    </g>
+  </g>
+
+  <!-- loaf of bread -->
+  <g transform="translate(760 388)">
+    <path d="M-150 96 L-150 6 C-150 -78 -96 -120 0 -120 C 96 -120 150 -78 150 6 L150 96 Z" fill="#FEBE98" stroke="#14141A" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M-150 30 C -96 8 96 8 150 30" stroke="#B4652F" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.7"/>
+    <g stroke="#14141A" stroke-width="7" stroke-linecap="round">
+      <line x1="-58" y1="-96" x2="-84" y2="-42"/>
+      <line x1="0" y1="-104" x2="0" y2="-46"/>
+      <line x1="58" y1="-96" x2="84" y2="-42"/>
+    </g>
+  </g>
+
+  <!-- spend marker -->
+  <text x="96" y="200" font-family="Arial, Helvetica, sans-serif" font-size="150" font-weight="800" letter-spacing="-6" fill="#14141A">&#163;4<tspan fill="#B4652F">m</tspan></text>
+
+  <text x="44" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#14141A">Nova <tspan fill="#B4652F">Brief</tspan></text>
+</svg>

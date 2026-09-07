@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" fill="none" aria-label="A large quotation mark beside a row of identical pages with a single distinct one, for the Nova Take on AI content">
+  <rect width="1200" height="675" fill="#14141A"/>
+  <rect x="44" y="44" width="56" height="6" rx="3" fill="#FEBE98"/>
+  <text x="44" y="86" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" letter-spacing="3" fill="#FEBE98">THE NOVA TAKE</text>
+
+  <!-- oversized quote mark -->
+  <g fill="#FEBE98">
+    <path d="M150 210 h150 v150 c0 90 -46 150 -150 176 v-70 c48 -16 70 -46 70 -106 h-70 Z"/>
+    <path d="M360 210 h150 v150 c0 90 -46 150 -150 176 v-70 c48 -16 70 -46 70 -106 h-70 Z"/>
+  </g>
+
+  <!-- row of identical pages, one turned/different -->
+  <g transform="translate(640 300)">
+    <rect x="0" y="0" width="120" height="160" rx="10" fill="#232228" stroke="#3a3942" stroke-width="4"/>
+    <rect x="70" y="0" width="120" height="160" rx="10" fill="#232228" stroke="#3a3942" stroke-width="4"/>
+    <rect x="140" y="0" width="120" height="160" rx="10" fill="#232228" stroke="#3a3942" stroke-width="4"/>
+    <rect x="210" y="0" width="120" height="160" rx="10" fill="#232228" stroke="#3a3942" stroke-width="4"/>
+    <g transform="translate(300 -14) rotate(9)">
+      <rect x="0" y="0" width="120" height="160" rx="10" fill="#FEBE98" stroke="#FBFAF7" stroke-width="4"/>
+      <g stroke="#14141A" stroke-width="8" stroke-linecap="round">
+        <line x1="24" y1="40" x2="96" y2="40"/><line x1="24" y1="70" x2="80" y2="70"/><line x1="24" y1="100" x2="96" y2="100"/>
+      </g>
+    </g>
+    <g stroke="#4a4952" stroke-width="7" stroke-linecap="round">
+      <line x1="24" y1="46" x2="96" y2="46"/><line x1="94" y1="46" x2="166" y2="46"/><line x1="164" y1="46" x2="236" y2="46"/>
+      <line x1="24" y1="86" x2="96" y2="86"/><line x1="94" y1="86" x2="166" y2="86"/><line x1="164" y1="86" x2="236" y2="86"/>
+    </g>
+  </g>
+
+  <text x="44" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#FBFAF7">Nova <tspan fill="#FEBE98">Brief</tspan></text>
+</svg>

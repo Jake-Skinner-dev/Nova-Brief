@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" fill="none" aria-label="A phone feed with posts being reordered by a circular arrow and a clock, for Instagram's chronological feed trial">
+  <rect width="1200" height="675" fill="#E4EDF9"/>
+  <rect x="44" y="44" width="56" height="6" rx="3" fill="#2F6BB4"/>
+
+  <!-- phone -->
+  <rect x="430" y="90" width="340" height="500" rx="40" fill="#FBFAF7" stroke="#14141A" stroke-width="10"/>
+  <rect x="540" y="118" width="120" height="12" rx="6" fill="#D9E3F1"/>
+
+  <!-- feed cards, numbered to show order flip -->
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="30" fill="#2F6BB4">
+    <rect x="470" y="160" width="260" height="110" rx="16" fill="#E4EDF9" stroke="#2F6BB4" stroke-width="4"/>
+    <text x="492" y="228">3</text>
+    <rect x="470" y="288" width="260" height="110" rx="16" fill="#EEF3FA" stroke="#C6D6EC" stroke-width="4"/>
+    <text x="492" y="356" fill="#8FA9C9">2</text>
+    <rect x="470" y="416" width="260" height="110" rx="16" fill="#EEF3FA" stroke="#C6D6EC" stroke-width="4"/>
+    <text x="492" y="484" fill="#8FA9C9">1</text>
+  </g>
+
+  <!-- reverse arrow -->
+  <g transform="translate(880 300)" stroke="#14141A" stroke-width="14" fill="none" stroke-linecap="round">
+    <path d="M0 -70 A 70 70 0 1 1 -66 24"/>
+    <path d="M-66 24 l-30 -12 M-66 24 l6 -32" stroke-linejoin="round"/>
+  </g>
+  <!-- clock -->
+  <g transform="translate(255 470)">
+    <circle r="66" fill="#FBFAF7" stroke="#14141A" stroke-width="10"/>
+    <path d="M0 0 V-40 M0 0 L30 16" stroke="#2F6BB4" stroke-width="12" stroke-linecap="round"/>
+  </g>
+
+  <text x="44" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#14141A">Nova <tspan fill="#B4652F">Brief</tspan></text>
+</svg>

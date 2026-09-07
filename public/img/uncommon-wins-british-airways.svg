@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" fill="none" aria-label="A paper plane folded from a pitch document climbing past a shortlist, for Uncommon winning the British Airways account">
+  <rect width="1200" height="675" fill="#E4F1E7"/>
+  <rect x="44" y="44" width="56" height="6" rx="3" fill="#3E8F52"/>
+
+  <!-- shortlist of pitch documents, one ticked -->
+  <g transform="translate(140 250)">
+    <rect x="0" y="0" width="150" height="196" rx="10" fill="#FBFAF7" stroke="#14141A" stroke-width="7"/>
+    <rect x="0" y="70" width="150" height="196" rx="10" fill="#FBFAF7" stroke="#14141A" stroke-width="7"/>
+    <rect x="0" y="140" width="150" height="196" rx="10" fill="#FBFAF7" stroke="#3E8F52" stroke-width="9"/>
+    <g stroke="#D7E6DC" stroke-width="9" stroke-linecap="round">
+      <line x1="26" y1="180" x2="124" y2="180"/><line x1="26" y1="212" x2="104" y2="212"/><line x1="26" y1="244" x2="124" y2="244"/>
+    </g>
+    <circle cx="150" cy="140" r="28" fill="#3E8F52"/>
+    <path d="M138 140 l9 10 l16 -20" stroke="#FBFAF7" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- dotted flight path -->
+  <path d="M330 470 C 520 460 620 300 900 150" stroke="#3E8F52" stroke-width="6" stroke-dasharray="4 22" stroke-linecap="round" fill="none"/>
+
+  <!-- paper plane -->
+  <g transform="translate(900 150) rotate(-24)">
+    <path d="M-120 40 L120 -40 L20 96 L-6 34 Z" fill="#FBFAF7" stroke="#14141A" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M120 -40 L-6 34 L-120 40" fill="#CDE6D5" stroke="#14141A" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M-6 34 L20 96" stroke="#14141A" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <text x="44" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#14141A">Nova <tspan fill="#B4652F">Brief</tspan></text>
+</svg>

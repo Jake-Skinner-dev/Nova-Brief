@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" fill="none" aria-label="A search bar with a sparkle above an AI answer block that is absorbing link results, for AI search and marketers">
+  <rect width="1200" height="675" fill="#ECEBFB"/>
+  <rect x="44" y="44" width="56" height="6" rx="3" fill="#4F46D6"/>
+
+  <!-- search bar -->
+  <rect x="180" y="150" width="840" height="96" rx="48" fill="#FBFAF7" stroke="#14141A" stroke-width="9"/>
+  <g transform="translate(232 198)" stroke="#14141A" stroke-width="9" fill="none" stroke-linecap="round">
+    <circle r="22"/><line x1="16" y1="16" x2="40" y2="40"/>
+  </g>
+  <rect x="300" y="186" width="470" height="24" rx="12" fill="#D6D3F4"/>
+
+  <!-- sparkle -->
+  <g transform="translate(1000 150)" fill="#FEBE98" stroke="#B4652F" stroke-width="4" stroke-linejoin="round">
+    <path d="M0 -46 C 8 -14 14 -8 46 0 C 14 8 8 14 0 46 C -8 14 -14 8 -46 0 C -14 -8 -8 -14 0 -46 Z"/>
+  </g>
+
+  <!-- AI answer block -->
+  <rect x="180" y="300" width="560" height="290" rx="22" fill="#FBFAF7" stroke="#4F46D6" stroke-width="9"/>
+  <g stroke="#4F46D6" stroke-width="16" stroke-linecap="round" opacity="0.9">
+    <line x1="224" y1="356" x2="690" y2="356"/><line x1="224" y1="404" x2="654" y2="404"/>
+    <line x1="224" y1="452" x2="690" y2="452"/><line x1="224" y1="500" x2="560" y2="500"/>
+  </g>
+
+  <!-- links being absorbed -->
+  <g transform="translate(820 340)">
+    <rect x="0" y="0" width="230" height="54" rx="12" fill="#E7E5FB" stroke="#B7B2EF" stroke-width="4"/>
+    <rect x="30" y="86" width="200" height="54" rx="12" fill="#EEEDFC" stroke="#CFCBF5" stroke-width="4"/>
+    <rect x="60" y="172" width="170" height="54" rx="12" fill="#F4F3FD" stroke="#DEDBF8" stroke-width="4"/>
+    <path d="M-70 60 C -20 60 -10 30 40 26" stroke="#4F46D6" stroke-width="6" stroke-dasharray="3 16" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <text x="44" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#14141A">Nova <tspan fill="#B4652F">Brief</tspan></text>
+</svg>

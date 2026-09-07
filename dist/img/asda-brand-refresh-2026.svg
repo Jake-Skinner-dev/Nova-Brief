@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" fill="none" aria-label="A brand identity panel being repainted with a fresh colour by a paint roller, for Asda's brand refresh">
+  <rect width="1200" height="675" fill="#EBE6F9"/>
+  <rect x="44" y="44" width="56" height="6" rx="3" fill="#6A4FB4"/>
+
+  <!-- old identity panel -->
+  <rect x="150" y="190" width="620" height="300" rx="24" fill="#FBFAF7" stroke="#14141A" stroke-width="9"/>
+  <rect x="200" y="250" width="230" height="46" rx="10" fill="#D9D2EA"/>
+  <rect x="200" y="322" width="380" height="22" rx="11" fill="#E4DEF3"/>
+  <rect x="200" y="366" width="300" height="22" rx="11" fill="#E4DEF3"/>
+  <circle cx="700" cy="330" r="60" fill="#E4DEF3"/>
+
+  <!-- fresh colour sweep across the lower half of the panel -->
+  <path d="M150 386 h620 v80 a24 24 0 0 1 -24 24 H174 a24 24 0 0 1 -24 -24 Z" fill="#4E8B2C"/>
+  <rect x="150" y="386" width="620" height="12" fill="#FEBE98" opacity="0.9"/>
+  <path d="M150 386 c 60 -22 120 22 180 0 c 60 -22 120 22 180 0 c 60 -22 120 22 180 0 c 40 -14 60 0 80 -6" stroke="#4E8B2C" stroke-width="16" fill="none" stroke-linecap="round"/>
+
+  <!-- paint roller mid-sweep -->
+  <g transform="translate(470 300)">
+    <path d="M300 120 v-46 h-150" stroke="#14141A" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="292" y="118" width="16" height="150" rx="8" fill="#14141A"/>
+    <rect x="118" y="34" width="180" height="84" rx="20" fill="#6A4FB4" stroke="#14141A" stroke-width="10"/>
+    <rect x="116" y="56" width="184" height="40" fill="#4E8B2C"/>
+  </g>
+
+  <text x="44" y="636" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.5" fill="#14141A">Nova <tspan fill="#B4652F">Brief</tspan></text>
+</svg>
