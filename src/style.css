@@ -65,6 +65,76 @@
   --r-lg: 20px;
   --r-pill: 999px;
   --ease: cubic-bezier(.2, .7, .2, 1);
+
+  color-scheme: light;
+}
+
+/* -------------------------------------------------------------------------
+   Dark theme. The masthead toggle writes data-theme onto <html>
+   (persisted in localStorage; a tiny inline script in head-common.html
+   sets it before first paint). Only tokens are redefined here — every
+   component above reads them, so nothing else needs to change.
+
+   The "always dark" editorial panels (Nova Take, newsletter, footer) keep
+   their look in both themes: --paper-ink becomes a *raised* dark surface
+   and those panels gain a hairline so they still separate from the page.
+   ------------------------------------------------------------------------- */
+:root[data-theme="dark"],
+:root[data-theme="dark"] body {
+  color-scheme: dark;
+
+  --paper: #131317;
+  --paper-sunken: #19191F;
+  --paper-ink: #20202A;
+  --card: #1C1C25;
+  --rule: #2C2C36;
+  --rule-strong: #3B3B47;
+
+  --ink: #ECEAE3;
+  --ink-soft: #A6A49C;
+  --ink-faint: #7C7A72;
+  --on-dark: #F6F4EF;
+  --on-dark-soft: rgba(246, 244, 239, 0.66);
+
+  --peach: #FEBE98;
+  --peach-wash: rgba(254, 190, 152, 0.12);
+  --peach-deep: #EBA878;
+  --indigo: #ABA6F5;
+  --indigo-wash: rgba(124, 126, 244, 0.16);
+  --purple: #9599C4;
+
+  --c-news: #B9B7AE;        --c-news-wash: rgba(185, 183, 174, 0.12);
+  --c-campaigns: #E6A277;   --c-campaigns-wash: rgba(230, 162, 119, 0.14);
+  --c-advertising: #E58A7F; --c-advertising-wash: rgba(229, 138, 127, 0.14);
+  --c-social: #7FB0E6;      --c-social-wash: rgba(127, 176, 230, 0.14);
+  --c-branding: #A98FE6;    --c-branding-wash: rgba(169, 143, 230, 0.14);
+  --c-digital: #6FC7C1;     --c-digital-wash: rgba(111, 199, 193, 0.14);
+  --c-ai: #ABA6F5;          --c-ai-wash: rgba(171, 166, 245, 0.14);
+  --c-agencies: #74C588;    --c-agencies-wash: rgba(116, 197, 136, 0.14);
+  --c-trends: #D9A85C;      --c-trends-wash: rgba(217, 168, 92, 0.14);
+  --c-stats: #E07FB5;       --c-stats-wash: rgba(224, 127, 181, 0.14);
+}
+
+/* No-JS courtesy: honour the OS preference when the toggle never ran. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
+    --paper: #131317;   --paper-sunken: #19191F;  --paper-ink: #20202A;
+    --card: #1C1C25;    --rule: #2C2C36;          --rule-strong: #3B3B47;
+    --ink: #ECEAE3;     --ink-soft: #A6A49C;      --ink-faint: #7C7A72;
+    --peach-wash: rgba(254, 190, 152, 0.12);      --peach-deep: #EBA878;
+    --indigo: #ABA6F5;  --indigo-wash: rgba(124, 126, 244, 0.16);  --purple: #9599C4;
+    --c-news: #B9B7AE;        --c-news-wash: rgba(185, 183, 174, 0.12);
+    --c-campaigns: #E6A277;   --c-campaigns-wash: rgba(230, 162, 119, 0.14);
+    --c-advertising: #E58A7F; --c-advertising-wash: rgba(229, 138, 127, 0.14);
+    --c-social: #7FB0E6;      --c-social-wash: rgba(127, 176, 230, 0.14);
+    --c-branding: #A98FE6;    --c-branding-wash: rgba(169, 143, 230, 0.14);
+    --c-digital: #6FC7C1;     --c-digital-wash: rgba(111, 199, 193, 0.14);
+    --c-ai: #ABA6F5;          --c-ai-wash: rgba(171, 166, 245, 0.14);
+    --c-agencies: #74C588;    --c-agencies-wash: rgba(116, 197, 136, 0.14);
+    --c-trends: #D9A85C;      --c-trends-wash: rgba(217, 168, 92, 0.14);
+    --c-stats: #E07FB5;       --c-stats-wash: rgba(224, 127, 181, 0.14);
+  }
 }
 
 /* ------------------------------------------------------------------ Reset */
@@ -87,7 +157,7 @@ img { max-width: 100%; display: block; }
 h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; }
 a { color: var(--indigo); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
-::selection { background: var(--peach); color: var(--ink); }
+::selection { background: var(--peach); color: #14141A; } /* peach is always light */
 
 button { font-family: inherit; }
 
@@ -105,7 +175,7 @@ button { font-family: inherit; }
 
 .skip-link {
   position: absolute; top: -100px; left: 16px; z-index: 200;
-  background: var(--ink); color: var(--on-dark); font-weight: 700;
+  background: var(--ink); color: var(--paper); font-weight: 700;
   padding: 12px 18px; border-radius: var(--r-pill); transition: top 200ms var(--ease);
 }
 .skip-link:focus { top: 16px; }
@@ -202,9 +272,9 @@ section + section { border-top: 1px solid var(--rule); }
   transition: transform 200ms var(--ease), background 200ms var(--ease), border-color 200ms var(--ease);
 }
 .btn:hover { text-decoration: none; }
-.btn--primary { background: var(--ink); color: var(--on-dark); }
-.btn--primary:hover { transform: translateY(-2px); background: #26262E; }
-.btn--peach { background: var(--peach); color: var(--ink); }
+.btn--primary { background: var(--ink); color: var(--paper); }
+.btn--primary:hover { transform: translateY(-2px); opacity: 0.88; }
+.btn--peach { background: var(--peach); color: #14141A; } /* text on peach is always dark */
 .btn--peach:hover { transform: translateY(-2px); background: #FFD0B4; }
 .btn--ghost { background: transparent; color: var(--ink); border-color: var(--rule-strong); }
 .btn--ghost:hover { border-color: var(--ink); background: var(--card); }
@@ -267,6 +337,22 @@ a.wordmark:hover { text-decoration: none; }
 }
 .masthead .nova-social-link:hover { color: var(--ink-soft); text-decoration: none; }
 .masthead .btn { padding: 9px 18px; font-size: 14px; }
+
+/* Light / dark toggle */
+.theme-toggle {
+  flex: none; width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--rule-strong); border-radius: var(--r-pill);
+  background: var(--card); color: var(--ink-soft); cursor: pointer;
+  transition: border-color 160ms var(--ease), color 160ms var(--ease);
+}
+.theme-toggle:hover { border-color: var(--ink); color: var(--ink); }
+.theme-toggle svg { width: 17px; height: 17px; }
+.theme-toggle .t-label { display: none; }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 .nav-toggle {
   display: none; margin-left: auto; width: 40px; height: 40px;
@@ -669,7 +755,7 @@ a.wordmark:hover { text-decoration: none; }
   border: 1px solid transparent;
 }
 a.chip:hover { text-decoration: none; border-color: currentColor; }
-.chip.is-active { background: var(--ink); color: var(--on-dark); }
+.chip.is-active { background: var(--ink); color: var(--paper); }
 
 .chip--news, .kicker--news { --chip-wash: var(--c-news-wash); --chip-ink: var(--c-news); --kicker-hue: var(--c-news); }
 .chip--campaigns, .kicker--campaigns { --chip-wash: var(--c-campaigns-wash); --chip-ink: var(--c-campaigns); --kicker-hue: var(--c-campaigns); }
@@ -790,6 +876,12 @@ a.chip:hover { text-decoration: none; border-color: currentColor; }
   .mobile-nav a:hover { color: var(--indigo); text-decoration: none; }
   .mobile-nav .mobile-nav-foot { margin-top: 24px; display: grid; gap: 12px; }
   .mobile-nav .mobile-nav-foot .btn { width: 100%; }
+  .mobile-nav .theme-toggle {
+    width: 100%; height: auto; gap: 10px; padding: 13px 16px;
+    border-radius: var(--r-pill); font-family: var(--font-display);
+    font-weight: 700; font-size: 15px; color: var(--ink);
+  }
+  .mobile-nav .theme-toggle .t-label { display: inline; }
   .mobile-nav .mobile-search {
     display: flex; align-items: center; gap: 8px; margin-top: 8px;
     border: 1px solid var(--rule-strong); border-radius: var(--r-pill); padding: 10px 16px;
@@ -808,4 +900,20 @@ a.chip:hover { text-decoration: none; border-color: currentColor; }
   .wb-item .wb-cat { grid-column: 2; }
   .brief-footer-top { grid-template-columns: 1fr; gap: 28px; }
   .article-body { font-size: 17px; }
+}
+
+/* ===================================================================
+   Dark-theme component touch-ups (the always-dark editorial panels need
+   a hairline to separate from the near-black page; story artwork is
+   light-only, so knock it back very slightly).
+   =================================================================== */
+:root[data-theme="dark"] .nova-take,
+:root[data-theme="dark"] .newsletter-panel,
+:root[data-theme="dark"] .article-aside.nova-take-box {
+  border: 1px solid var(--rule);
+}
+:root[data-theme="dark"] .brief-footer { border-top: 1px solid var(--rule); }
+:root[data-theme="dark"] .article-body { color: var(--ink); }
+:root[data-theme="dark"] :is(.top-story-media, .brief-row-media, .cw-media, .sw-media, .related-media, .article-hero) img {
+  opacity: 0.94;
 }

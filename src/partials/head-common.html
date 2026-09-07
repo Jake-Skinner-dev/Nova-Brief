@@ -12,6 +12,19 @@
 <meta name="theme-color" content="#FBFAF7" />
 <link rel="alternate" type="application/rss+xml" title="Nova Brief" href="/rss.xml" />
 
+<!-- Set the theme before first paint so there's no flash. The masthead
+     toggle (src/theme.js) keeps this in sync and persists the choice. -->
+<script>
+  (function () {
+    try {
+      var k = "nova-brief-theme", s = localStorage.getItem(k);
+      var t = s === "dark" || s === "light" ? s
+        : (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+
 <!-- No analytics tag yet — add GA4 / other here once an ID is confirmed. -->
 
 <link rel="stylesheet" href="/src/style.css" />

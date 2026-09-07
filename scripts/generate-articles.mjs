@@ -119,20 +119,25 @@ function parseBody(raw) {
   return out.join("\n        ");
 }
 
-/* -------------------------------------------------- built asset tags */
+/* -------------------------------------------------- built asset tags
+   Take EVERY hashed asset the built homepage loads — all stylesheets, all
+   module scripts (Vite may split a shared chunk, e.g. theme.js, so there
+   can be more than one), and all modulepreload hints — so generated pages
+   load exactly what index.html does. */
 function assetTags() {
   const idx = readFileSync(join(distDir, "index.html"), "utf-8");
-  const css = idx.match(/<link[^>]+rel="stylesheet"[^>]+href="(\.\/assets\/[^"]+\.css)"[^>]*>/);
-  const js = idx.match(/<script[^>]+type="module"[^>]+src="(\.\/assets\/[^"]+\.js)"[^>]*><\/script>/);
-  const preloads = [...idx.matchAll(/<link[^>]+rel="modulepreload"[^>]+href="(\.\/assets\/[^"]+)"[^>]*>/g)];
-  if (!css || !js) {
-    console.error("generate-articles: could not find built CSS/JS tags in dist/index.html. Run `vite build` first.");
-    process.exit(1);
-  }
   const abs = (p) => "/" + p.slice(2); // "./assets/x" -> "/assets/x"
+  const css = [...idx.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="(\.\/assets\/[^"]+\.css)"[^>]*>/g)];
+  const js = [...idx.matchAll(/<script[^>]+type="module"[^>]+src="(\.\/assets\/[^"]+\.js)"[^>]*><\/script>/g)];
+  const preloads = [...idx.matchAll(/<link[^>]+rel="modulepreload"[^>]+href="(\.\/assets\/[^"]+)"[^>]*>/g)];
+  if (!css.length || !js.length) {
+    console.error("generate-articles: could not find built CSS/JS tags in dist/index.html. Run `vite build` first.");
+    process.exitCode = 1;
+    throw new Error("missing built assets");
+  }
   return {
-    css: `<link rel="stylesheet" href="${abs(css[1])}" />`,
-    js: `<script type="module" src="${abs(js[1])}"></script>`,
+    css: css.map((m) => `<link rel="stylesheet" href="${abs(m[1])}" />`).join("\n"),
+    js: js.map((m) => `<script type="module" src="${abs(m[1])}"></script>`).join("\n"),
     preloads: preloads.map((m) => `<link rel="modulepreload" href="${abs(m[1])}" />`).join("\n")
   };
 }

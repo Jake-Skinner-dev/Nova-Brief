@@ -8,6 +8,9 @@
 
 import { supabase } from "./supabaseClient.js";
 import { slugify } from "./slugify.js";
+import { initTheme } from "./theme.js";
+
+initTheme();
 
 const DEV = import.meta.env.DEV;
 const body = document.body;

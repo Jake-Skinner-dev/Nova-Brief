@@ -6,6 +6,9 @@
 
 import { supabase } from "./supabaseClient.js";
 import { slugify } from "./slugify.js";
+import { initTheme } from "./theme.js";
+
+initTheme();
 
 /* -------- shared chrome (kept tiny; mirrors main.js) -------- */
 const navToggle = document.getElementById("nav-toggle");

@@ -28,12 +28,25 @@
 <meta name="theme-color" content="#FBFAF7" />
 <link rel="alternate" type="application/rss+xml" title="Nova Brief" href="/rss.xml" />
 
+<!-- Set the theme before first paint so there's no flash. The masthead
+     toggle (src/theme.js) keeps this in sync and persists the choice. -->
+<script>
+  (function () {
+    try {
+      var k = "nova-brief-theme", s = localStorage.getItem(k);
+      var t = s === "dark" || s === "light" ? s
+        : (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  })();
+</script>
+
 <!-- No analytics tag yet — add GA4 / other here once an ID is confirmed. -->
+
 
-
-  <script type="module" crossorigin src="./assets/slugify-CDKkWH8I.js"></script>
-  <script type="module" crossorigin src="./assets/main-D3ut4RS_.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/slugify-_NbntVjt.css">
+  <script type="module" crossorigin src="./assets/theme-fX6oMt-Y.js"></script>
+  <script type="module" crossorigin src="./assets/main-E9sSPc8k.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/theme-COFs3tRb.css">
 </head>
 <body data-page="about">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -62,6 +75,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
         <input type="search" name="q" placeholder="Search" aria-label="Search Nova Brief" />
       </form>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg>
+        <span class="t-label" data-theme-label>Dark mode</span>
+      </button>
       <a href="https://novasocial.co.uk" class="nova-social-link" target="_blank" rel="noopener">Nova&nbsp;Social&nbsp;&#8599;</a>
       <a href="/newsletter.html" class="btn btn--peach">Get the Brief</a>
     </div>
@@ -87,6 +105,11 @@
   <a href="/agencies.html">Agencies</a>
   <a href="/stats.html">Stats</a>
   <div class="mobile-nav-foot">
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg>
+      <span class="t-label" data-theme-label>Dark mode</span>
+    </button>
     <a href="/newsletter.html" class="btn btn--peach">Get the Brief</a>
     <a href="https://novasocial.co.uk" class="btn btn--ghost" target="_blank" rel="noopener">Visit Nova Social &#8599;</a>
   </div>
@@ -192,6 +215,6 @@
     </div>
   </div>
 </footer>
-
+
 </body>
 </html>
