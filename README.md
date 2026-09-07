@@ -21,7 +21,7 @@ signups) is read from **Supabase** with the public anon key; Row Level
 Security means the anon key can only ever see `status = 'published'` rows.
 
 ```
-brief/
+.
   index.html              editorial homepage
   news.html … stats.html  section landings (9 franchises)
   about / newsletter / search / article / 404
@@ -85,27 +85,28 @@ deploy** — same model as the parent site's Insights pages.
 
 ## 5. Deploy — `brief.novasocial.co.uk`
 
-Set up as a **second, separate** cPanel Git Version Control clone of this
-repo (independent of the one serving `novasocial.co.uk`):
+This is its own repo (`github.com/Jake-Skinner-dev/Nova-Brief`), served via
+its own cPanel Git Version Control clone, independent of the one serving
+`novasocial.co.uk`:
 
-1. cPanel → Git Version Control → Create; clone URL = this repo; branch
-   `main`; repository path anywhere outside a document root.
-2. Confirm the document root for `brief.novasocial.co.uk` (cPanel → Domains)
-   and set `DEPLOYPATH` in `brief/.cpanel.yml` to match.
+1. cPanel → Git Version Control → Create.
+   - Clone URL: `https://github.com/Jake-Skinner-dev/Nova-Brief.git`
+   - Repository Path: `/home/o5l9nmc9gw7j/repositories/Nova-Brief`
+   - Branch: `main`
+2. Make sure the `brief.novasocial.co.uk` subdomain's document root is
+   `/home/o5l9nmc9gw7j/public_html/brief.novasocial.co.uk` (or edit
+   `DEPLOYPATH` in `.cpanel.yml` to match cPanel → Domains).
 3. Manage → Pull or Deploy → Update from Remote, then Deploy HEAD Commit.
-   `brief/.cpanel.yml` copies `brief/dist/` into that document root and
-   places `.htaccess` (clean URLs, 404, caching).
+   `.cpanel.yml` copies `dist/` into that document root and places
+   `.htaccess` (clean URLs, 404, caching).
 
-**Update flow:** make changes → `npm run build` → commit `brief/` (incl.
-`brief/dist/`) → push → Deploy HEAD Commit in the Brief cPanel repo.
+**Update flow:** `npm run build` → commit (incl. `dist/`) → push → Deploy
+HEAD Commit in the cPanel repo.
 
-*Vercel alternative:* new project, root directory `brief`, build
-`npm run build`, output `dist`, domain `brief.novasocial.co.uk`.
-
-*Optional automation:* `.github/workflows/rebuild-brief.yml` rebuilds
-`brief/dist/` every 30 minutes and commits it if published content changed
-(so publishing in the admin doesn't need a manual build). Delete the file
-to turn it off.
+*Optional automation:* `.github/workflows/rebuild.yml` rebuilds `dist/`
+every 30 minutes and commits it if published content changed (so
+publishing in the admin doesn't need a manual build). Delete the file to
+turn it off.
 
 ## 6. Writing in the CMS
 
