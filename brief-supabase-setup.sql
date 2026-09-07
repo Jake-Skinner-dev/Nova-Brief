@@ -414,10 +414,13 @@ Going early is a media strategy as much as a creative one. Impressions are cheap
 on conflict (slug) do nothing;
 
 -- Story artwork. One editorial SVG per seeded story, served from
--- public/img/<slug>.svg. Only fills rows that have no image yet, so it
--- never overwrites a picture an editor sets later.
+-- public/img/<slug>.svg. featured_image_url is a root-relative path so it
+-- resolves both locally (npm run dev) and on the live domain;
+-- social_image_url stays absolute because social scrapers need that.
+-- Only fills rows that have no image yet, so it never overwrites a
+-- picture an editor sets later.
 update public.brief_articles a
-set featured_image_url = 'https://brief.novasocial.co.uk/img/' || a.slug || '.svg',
+set featured_image_url = '/img/' || a.slug || '.svg',
     social_image_url   = coalesce(a.social_image_url, 'https://brief.novasocial.co.uk/og-default.png')
 where a.slug in (
   'hovis-4m-brand-campaign',

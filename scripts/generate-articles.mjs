@@ -295,9 +295,14 @@ function brandInner(brand, rows) {
 </main>`;
 }
 
+function absUrl(u) {
+  if (!u) return null;
+  return /^https?:///i.test(u) ? u : SITE + (u.startsWith("/") ? u : "/" + u);
+}
+
 function articleJsonLd(a) {
   const url = `${SITE}/${a.slug}.html`;
-  const img = a.social_image_url || a.featured_image_url || `${SITE}/og-default.png`;
+  const img = absUrl(a.social_image_url) || absUrl(a.featured_image_url) || `${SITE}/og-default.png`;
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": a.is_sponsored ? "Article" : "NewsArticle",
@@ -390,7 +395,7 @@ async function main() {
       .slice(0, 3);
 
     const url = `${SITE}/${slug}.html`;
-    const img = a.social_image_url || a.featured_image_url || `${SITE}/og-default.png`;
+    const img = absUrl(a.social_image_url) || absUrl(a.featured_image_url) || `${SITE}/og-default.png`;
     const desc = a.meta_description || a.standfirst || "";
     const headExtra = `<meta name="robots" content="index, follow" />
 <meta property="og:type" content="article" />
