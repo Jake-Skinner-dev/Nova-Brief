@@ -3,8 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Page not found | Nova Brief</title>
-<meta name="robots" content="noindex, follow" />
+<title>Advertise with Nova Brief | Reach marketers, founders and agencies</title>
+<meta name="description" content="Put your business in front of Nova Brief's readers — marketers, founders and agency teams. Apply to advertise or sponsor a section." />
+<link rel="canonical" href="https://brief.novasocial.co.uk/advertise.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Nova Brief" />
+<meta property="og:title" content="Advertise with Nova Brief" />
+<meta property="og:description" content="Put your business in front of marketers, founders and agency teams. Apply to advertise or sponsor a section." />
+<meta property="og:url" content="https://brief.novasocial.co.uk/advertise.html" />
+<meta property="og:image" content="https://brief.novasocial.co.uk/og-default.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="robots" content="index, follow" />
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
@@ -39,7 +48,7 @@
   <script type="module" crossorigin src="./assets/main-DnyMtT2H.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/theme-KYUsKv6o.css">
 </head>
-<body data-page="404">
+<body data-page="advertise">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="masthead" id="masthead">
@@ -108,16 +117,114 @@
 
 <main id="main">
   <div class="container container--narrow">
-    <div class="listing-head" style="padding-bottom:40px;">
-      <span class="kicker kicker--plain">404</span>
-      <h1>That page has moved on.</h1>
-      <p>The story you were after isn't here. It may have been renamed, or the link might be off.</p>
-      <div class="chip-row" style="margin-top:16px;">
-        <a class="btn btn--primary" href="/">Back to the homepage</a>
-        <a class="btn btn--ghost" href="/search.html">Search Nova Brief</a>
+    <div class="listing-head" data-reveal>
+      <span class="kicker kicker--plain">Advertise</span>
+      <h1>Put your brand in front of marketers.</h1>
+      <p>Nova Brief is read by marketing leaders, founders and agency teams who want the story without the waffle. If that&rsquo;s your audience, let&rsquo;s talk.</p>
+    </div>
+
+    <section data-reveal>
+      <h2 style="font-size:22px;letter-spacing:-0.02em;margin-bottom:14px;">Where your brand can appear</h2>
+      <div class="fb-list">
+        <div style="border-bottom:1px solid var(--rule);padding-bottom:14px;">
+          <span class="fb-hl">In the Daily Brief</span>
+          <span class="fb-meta">A native placement in the main story feed, clearly marked.</span>
+        </div>
+        <div style="border-bottom:1px solid var(--rule);padding-bottom:14px;">
+          <span class="fb-hl">Campaign of the Week sponsor</span>
+          <span class="fb-meta">Your name on the publication&rsquo;s signature weekly breakdown.</span>
+        </div>
+        <div style="border-bottom:1px solid var(--rule);padding-bottom:14px;">
+          <span class="fb-hl">Killer Stats sponsor</span>
+          <span class="fb-meta">Attached to the numbers people screenshot and share.</span>
+        </div>
+        <div style="border-bottom:1px solid var(--rule);padding-bottom:14px;">
+          <span class="fb-hl">The Weekly Brief email</span>
+          <span class="fb-meta">A sponsor slot in the newsletter that lands every week.</span>
+        </div>
+        <div>
+          <span class="fb-hl">Partner content</span>
+          <span class="fb-meta">A longer, clearly-labelled piece produced with the Nova Social team.</span>
+        </div>
       </div>
+    </section>
+
+    <section data-reveal>
+      <h2 style="font-size:22px;letter-spacing:-0.02em;margin-bottom:6px;">Apply to advertise</h2>
+      <p class="section-lede" style="margin-bottom:22px;">Tell us a little about your business and we&rsquo;ll come back with options and rates.</p>
+
+      <form class="brief-form" id="advertise-form" novalidate>
+        <div class="form-row">
+          <label class="form-field">
+            <span>Business name <em>*</em></span>
+            <input type="text" name="business_name" autocomplete="organization" required />
+          </label>
+          <label class="form-field">
+            <span>Your name</span>
+            <input type="text" name="contact_name" autocomplete="name" />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="form-field">
+            <span>Email <em>*</em></span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label class="form-field">
+            <span>Website</span>
+            <input type="url" name="website" placeholder="https://" autocomplete="url" />
+          </label>
+        </div>
+
+        <label class="form-field">
+          <span>Rough monthly budget</span>
+          <select name="budget_band">
+            <option value="">Prefer not to say</option>
+            <option>Under &pound;500</option>
+            <option>&pound;500&ndash;&pound;1,000</option>
+            <option>&pound;1,000&ndash;&pound;2,500</option>
+            <option>&pound;2,500+</option>
+            <option>Not sure yet</option>
+          </select>
+        </label>
+
+        <fieldset class="form-field form-checks">
+          <span>Where you&rsquo;re interested (tick any)</span>
+          <label><input type="checkbox" name="placements" value="Daily Brief" /> Daily Brief</label>
+          <label><input type="checkbox" name="placements" value="Campaign of the Week" /> Campaign of the Week</label>
+          <label><input type="checkbox" name="placements" value="Killer Stats" /> Killer Stats</label>
+          <label><input type="checkbox" name="placements" value="Newsletter" /> The Weekly Brief email</label>
+          <label><input type="checkbox" name="placements" value="Partner content" /> Partner content</label>
+          <label><input type="checkbox" name="placements" value="Not sure" /> Not sure &mdash; advise me</label>
+        </fieldset>
+
+        <label class="form-field">
+          <span>Anything else?</span>
+          <textarea name="message" rows="4" placeholder="Timing, goals, the product you want to promote&hellip;"></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--peach" id="advertise-submit">Send application</button>
+          <p class="form-note">We&rsquo;ll only use these details to reply about advertising.</p>
+        </div>
+        <p class="form-msg" id="advertise-msg" hidden></p>
+      </form>
+    </section>
+  </div>
+  <section aria-label="From Nova Social" data-reveal>
+  <div class="container">
+    <div class="nova-social-cta">
+      <div class="nsc-text">
+        <strong>Need help with your marketing?</strong>
+        <p>Nova Brief is published by Nova Social — a marketing agency that helps businesses build smarter, simpler marketing.</p>
+      </div>
+      <a href="https://novasocial.co.uk" class="arrow-link" target="_blank" rel="noopener">
+        Work with Nova Social <span class="arrow" aria-hidden="true">&#8594;</span>
+      </a>
     </div>
   </div>
+</section>
+
 </main>
 <footer class="brief-footer">
   <div class="brief-footer-inner">
@@ -162,6 +269,6 @@
     </div>
   </div>
 </footer>
-
+
 </body>
 </html>

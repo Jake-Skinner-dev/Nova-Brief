@@ -134,7 +134,7 @@ document.querySelectorAll(".tab-btn").forEach((btn) => {
     document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("is-active"));
     btn.classList.add("is-active");
     const tab = btn.dataset.tab;
-    ["overview", "articles", "stats", "editions", "subscribers", "brands"].forEach((t) => {
+    ["overview", "articles", "stats", "editions", "subscribers", "adverts", "brands"].forEach((t) => {
       document.getElementById("tab-" + t).hidden = t !== tab;
     });
   });
@@ -200,6 +200,7 @@ async function loadAll() {
     loadStats(),
     loadEditions(),
     loadSubscribers(),
+    loadAdEnquiries(),
     loadBrands()
   ]);
 }
@@ -211,11 +212,12 @@ async function loadOverview() {
   grid.innerHTML = "";
   activity.innerHTML = "";
 
-  const [{ data: articles }, { data: stats }, { data: editions }, { data: subs }] = await Promise.all([
+  const [{ data: articles }, { data: stats }, { data: editions }, { data: subs }, { data: ads }] = await Promise.all([
     sb.from("brief_articles").select("id,status,source,headline,updated_at,published_at"),
     sb.from("brief_stats").select("id"),
     sb.from("brief_editions").select("id"),
-    sb.from("brief_subscribers").select("id,created_at")
+    sb.from("brief_subscribers").select("id,created_at"),
+    sb.from("brief_ad_enquiries").select("id,status,created_at")
   ]);
 
   const A = articles || [];
@@ -251,6 +253,8 @@ async function loadOverview() {
   const sub7 = (subs || []).filter((s) => +new Date(s.created_at) > since(7)).length;
   grid.appendChild(box(subTotal, "Subscribers"));
   grid.appendChild(box(sub7, "Subscribers (7d)"));
+  const adsNew = (ads || []).filter((x) => x.status === "new").length;
+  grid.appendChild(box(adsNew, "Ad enquiries (new)", adsNew > 0));
   grid.appendChild(box(count((a) => a.status === "archived"), "Archived"));
   grid.appendChild(box(A.length, "Articles total"));
 
@@ -769,6 +773,75 @@ document.getElementById("copy-subscribers").addEventListener("click", async () =
   try {
     await navigator.clipboard.writeText(csv);
     alert(`Copied ${SUBSCRIBERS.length} rows to the clipboard.`);
+  } catch {
+    prompt("Copy the CSV:", csv);
+  }
+});
+
+/* ----------------------------------------------------- AD ENQUIRIES */
+let ADVERTS = [];
+async function loadAdEnquiries() {
+  const list = document.getElementById("advert-list");
+  list.innerHTML = "";
+  const { data, error } = await sb
+    .from("brief_ad_enquiries")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) {
+    list.innerHTML = `<p class="msg err">${error.message} — did brief_ad_enquiries get created? Re-run brief-supabase-setup.sql.</p>`;
+    return;
+  }
+  ADVERTS = data || [];
+  const nNew = ADVERTS.filter((a) => a.status === "new").length;
+  document.getElementById("advert-count-line").textContent =
+    `${ADVERTS.length} enquir${ADVERTS.length === 1 ? "y" : "ies"}${nNew ? ` · ${nNew} new` : ""}`;
+
+  ADVERTS.forEach((a) => {
+    const placements = Array.isArray(a.placements) && a.placements.length ? a.placements.join(", ") : "—";
+    const meta = [a.budget_band || "budget n/a", placements, fmtShort(a.created_at)].join(" · ");
+    const sel = el("select", { style: "width:auto;padding:6px 8px;font-size:12.5px;" });
+    ["new", "contacted", "won", "closed"].forEach((o) =>
+      sel.appendChild(el("option", { value: o, text: o, ...(a.status === o ? { selected: "selected" } : {}) }))
+    );
+    sel.addEventListener("change", async () => {
+      await sb.from("brief_ad_enquiries").update({ status: sel.value }).eq("id", a.id);
+      loadOverview();
+    });
+    const del = el("button", { type: "button", class: "btn btn-danger btn-sm", text: "Delete" });
+    del.addEventListener("click", async () => {
+      if (!confirm(`Delete the enquiry from ${a.business_name || a.email}?`)) return;
+      await sb.from("brief_ad_enquiries").delete().eq("id", a.id);
+      loadAdEnquiries();
+      loadOverview();
+    });
+    const contact = [a.contact_name, a.email, a.website].filter(Boolean).join(" · ");
+    list.appendChild(
+      el("div", { class: "r", style: "grid-template-columns:1fr auto auto;" }, [
+        el("div", {}, [
+          el("div", { class: "r-title", text: a.business_name || "(no business name)" }),
+          el("div", { class: "r-meta", text: contact || "—" }),
+          el("div", { class: "r-meta", text: meta }),
+          a.message ? el("div", { class: "r-meta", style: "color:var(--ink-soft);margin-top:4px;", text: a.message }) : null
+        ]),
+        sel,
+        del
+      ])
+    );
+  });
+  if (!ADVERTS.length) list.appendChild(el("p", { class: "hint", text: "No advertising enquiries yet." }));
+}
+document.getElementById("copy-adverts").addEventListener("click", async () => {
+  const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const csv =
+    "business_name,contact_name,email,website,budget_band,placements,status,message,created_at\n" +
+    ADVERTS.map((a) =>
+      [a.business_name, a.contact_name, a.email, a.website, a.budget_band, (a.placements || []).join("; "), a.status, a.message, a.created_at]
+        .map(esc)
+        .join(",")
+    ).join("\n");
+  try {
+    await navigator.clipboard.writeText(csv);
+    alert(`Copied ${ADVERTS.length} rows to the clipboard.`);
   } catch {
     prompt("Copy the CSV:", csv);
   }

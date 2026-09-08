@@ -139,6 +139,23 @@ create table if not exists public.brief_subscribers (
 );
 
 -- ---------------------------------------------------------------------
+-- brief_ad_enquiries - "Advertise with Nova Brief" applications
+-- (anon may INSERT only; the editor reads them in /admin/)
+-- ---------------------------------------------------------------------
+create table if not exists public.brief_ad_enquiries (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  business_name text not null default '',
+  contact_name text,
+  email text not null default '',
+  website text,
+  budget_band text,
+  placements text[] not null default '{}',
+  message text,
+  status text not null default 'new' check (status in ('new','contacted','won','closed'))
+);
+
+-- ---------------------------------------------------------------------
 -- brief_brands / brief_authors - expandable, optional
 -- ---------------------------------------------------------------------
 create table if not exists public.brief_brands (
@@ -169,6 +186,7 @@ alter table public.brief_articles    enable row level security;
 alter table public.brief_stats       enable row level security;
 alter table public.brief_editions    enable row level security;
 alter table public.brief_subscribers enable row level security;
+alter table public.brief_ad_enquiries enable row level security;
 alter table public.brief_brands      enable row level security;
 alter table public.brief_authors     enable row level security;
 
@@ -208,6 +226,16 @@ create policy "brief_subscribers editor read" on public.brief_subscribers
 drop policy if exists "brief_subscribers editor manage" on public.brief_subscribers;
 create policy "brief_subscribers editor manage" on public.brief_subscribers
   for delete to authenticated using (public.brief_is_editor());
+
+drop policy if exists "brief_ad_enquiries anon submit" on public.brief_ad_enquiries;
+create policy "brief_ad_enquiries anon submit" on public.brief_ad_enquiries
+  for insert to anon, authenticated with check (true);
+drop policy if exists "brief_ad_enquiries editor read" on public.brief_ad_enquiries;
+create policy "brief_ad_enquiries editor read" on public.brief_ad_enquiries
+  for select to authenticated using (public.brief_is_editor());
+drop policy if exists "brief_ad_enquiries editor manage" on public.brief_ad_enquiries;
+create policy "brief_ad_enquiries editor manage" on public.brief_ad_enquiries
+  for all to authenticated using (public.brief_is_editor()) with check (public.brief_is_editor());
 
 drop policy if exists "brief_brands public read" on public.brief_brands;
 create policy "brief_brands public read" on public.brief_brands for select using (true);

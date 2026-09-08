@@ -231,6 +231,7 @@ function articleInner(a, related) {
       ${source}
       ${tags}
     </article>
+    ${houseAd}
   </div>
   ${relatedBlock}
   ${newsletterCta}
@@ -345,6 +346,7 @@ function breadcrumbJsonLd(a) {
 /* ------------------------------------------------------------------ main */
 let newsletterCta = "";
 let novaSocialCta = "";
+let houseAd = "";
 
 async function main() {
   if (!existsSync(join(distDir, "index.html"))) {
@@ -359,6 +361,7 @@ async function main() {
   const footer = P("footer");
   newsletterCta = P("newsletter-cta");
   novaSocialCta = P("nova-social-cta");
+  houseAd = P("ad-slot");
   const shellCtx = { headCommon, tags, header, footer };
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } });
@@ -384,7 +387,13 @@ async function main() {
     return;
   }
 
-  const sitemap = [`${SITE}/`, ...SECTIONS.map((s) => `${SITE}/${s.slug}.html`), `${SITE}/about.html`, `${SITE}/newsletter.html`];
+  const sitemap = [
+    `${SITE}/`,
+    ...SECTIONS.map((s) => `${SITE}/${s.slug}.html`),
+    `${SITE}/about.html`,
+    `${SITE}/newsletter.html`,
+    `${SITE}/advertise.html`
+  ];
 
   /* ---- articles ---- */
   const used = new Set();

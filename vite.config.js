@@ -42,6 +42,7 @@ export default defineConfig({
         index: page("index"),
         about: page("about"),
         newsletter: page("newsletter"),
+        advertise: page("advertise"),
         search: page("search"),
         article: page("article"),
         notFound: page("404"),

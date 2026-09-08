@@ -182,6 +182,50 @@ document.querySelectorAll("#newsletter-form, [data-newsletter-form]").forEach((f
 });
 
 /* ===================================================================
+   Advertise application — writes to brief_ad_enquiries (anon INSERT only)
+   =================================================================== */
+const advertiseForm = document.getElementById("advertise-form");
+if (advertiseForm) {
+  const msg = document.getElementById("advertise-msg");
+  const submit = document.getElementById("advertise-submit");
+  const setMsg = (text, isError) => {
+    if (!msg) return;
+    msg.hidden = false;
+    msg.textContent = text;
+    msg.classList.toggle("is-error", !!isError);
+  };
+  advertiseForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(advertiseForm);
+    const businessName = (data.get("business_name") || "").toString().trim();
+    const email = (data.get("email") || "").toString().trim();
+    if (!businessName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setMsg("Add a business name and a valid email address.", true);
+      return;
+    }
+    const payload = {
+      business_name: businessName,
+      contact_name: (data.get("contact_name") || "").toString().trim() || null,
+      email,
+      website: (data.get("website") || "").toString().trim() || null,
+      budget_band: (data.get("budget_band") || "").toString().trim() || null,
+      placements: data.getAll("placements").map(String),
+      message: (data.get("message") || "").toString().trim() || null
+    };
+    if (submit) submit.disabled = true;
+    setMsg("Sending…");
+    const { error } = await supabase.from("brief_ad_enquiries").insert(payload);
+    if (submit) submit.disabled = false;
+    if (error) {
+      setMsg("Something went wrong sending that — try again, or email brief@novasocial.co.uk.", true);
+    } else {
+      setMsg("Thanks — your application is in. We'll be in touch by email.");
+      advertiseForm.reset();
+    }
+  });
+}
+
+/* ===================================================================
    Shared query helpers
    =================================================================== */
 async function fetchPublished(extra = (q) => q) {
