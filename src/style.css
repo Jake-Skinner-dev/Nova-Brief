@@ -688,6 +688,43 @@ a.wordmark:hover { text-decoration: none; }
 /* article-page ad sits inside the narrow column */
 .article-wrap + .ad-slot--house, .article-body ~ .ad-slot--house { margin: 30px 0; }
 
+/* Wide-screen side rails — house ads fixed in the left / right gutters.
+   Only shown once the gutter beside the 1200px column is wide enough. */
+.ad-rails { display: none; }
+.ad-rails.is-hidden { opacity: 0; pointer-events: none; }
+@media (min-width: 1600px) {
+  .ad-rails { display: block; transition: opacity 220ms var(--ease); }
+  .ad-rail {
+    position: fixed; top: 104px; z-index: 40; width: 160px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .ad-rail--left  { left:  calc((100vw - var(--maxw)) / 2 - 184px); }
+  .ad-rail--right { right: calc((100vw - var(--maxw)) / 2 - 184px); }
+  .ad-rail .ad-slot-label { margin-bottom: 2px; }
+  .ad-rail-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; text-align: center; padding: 20px 16px; min-height: 460px;
+    max-height: calc(100vh - 150px);
+    border: 1px dashed var(--rule-strong); border-radius: var(--r-md);
+    background:
+      repeating-linear-gradient(135deg, var(--peach-wash) 0 10px, transparent 10px 20px),
+      var(--card);
+    transition: border-color 200ms var(--ease), transform 200ms var(--ease);
+  }
+  .ad-rail-card:hover { border-color: var(--peach-deep); transform: translateY(-2px); text-decoration: none; }
+  .ad-rail-card strong {
+    font-family: var(--font-display); font-weight: 800; font-size: 16px;
+    letter-spacing: -0.02em; line-height: 1.2; color: var(--ink);
+  }
+  .ad-rail-card span { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+  .ad-rail-cta { font-family: var(--font-display); font-weight: 700; font-size: 12.5px; color: var(--peach-deep); margin-top: 4px; }
+}
+@media (min-width: 1880px) {
+  .ad-rail { width: 200px; }
+  .ad-rail--left  { left:  calc((100vw - var(--maxw)) / 2 - 232px); }
+  .ad-rail--right { right: calc((100vw - var(--maxw)) / 2 - 232px); }
+}
+
 /* ===================================================================
    Forms (advertise / contact-style)
    =================================================================== */

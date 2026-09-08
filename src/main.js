@@ -96,6 +96,19 @@ if (masthead) {
   onScrollHeader();
 }
 
+// Fade the wide-screen side rails out before they'd overlap the footer.
+const adRails = document.querySelector(".ad-rails");
+if (adRails) {
+  const railGuard = () => {
+    const nearEnd =
+      window.innerHeight + window.scrollY > document.documentElement.scrollHeight - 540;
+    adRails.classList.toggle("is-hidden", nearEnd);
+  };
+  window.addEventListener("scroll", railGuard, { passive: true });
+  window.addEventListener("resize", railGuard);
+  railGuard();
+}
+
 // Reading progress bar (article pages include #read-progress)
 const progressBar = document.getElementById("read-progress");
 if (progressBar) {
