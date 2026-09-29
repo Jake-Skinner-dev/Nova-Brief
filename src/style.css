@@ -354,6 +354,17 @@ a.wordmark:hover { text-decoration: none; }
 :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
 :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
+/* X (Twitter) link — masthead icon button */
+.x-icon-link {
+  flex: none; width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--rule-strong); border-radius: var(--r-pill);
+  background: var(--card); color: var(--ink-soft);
+  transition: border-color 160ms var(--ease), color 160ms var(--ease);
+}
+.x-icon-link:hover { border-color: var(--ink); color: var(--ink); text-decoration: none; }
+.x-icon-link svg { width: 16px; height: 16px; }
+
 .nav-toggle {
   display: none; margin-left: auto; width: 40px; height: 40px;
   align-items: center; justify-content: center;
@@ -884,6 +895,12 @@ a.chip:hover { text-decoration: none; border-color: currentColor; }
 .brief-footer .wordmark strong { color: var(--on-dark); }
 .brief-footer .wordmark .wm-brief { color: var(--peach); }
 .brief-footer .footer-tag { font-family: var(--font-editorial); font-size: 15px; color: var(--on-dark-soft); margin: 14px 0 0; max-width: 34ch; }
+.brief-footer .x-link {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 18px;
+  font-family: var(--font-display); font-weight: 700; font-size: 13.5px; color: var(--on-dark);
+}
+.brief-footer .x-link svg { width: 15px; height: 15px; }
+.brief-footer .x-link:hover { color: var(--peach); text-decoration: none; }
 .footer-col { display: grid; gap: 10px; align-content: start; font-size: 14px; }
 .footer-col .col-head { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246,244,239,0.4); margin-bottom: 3px; }
 .footer-col a { color: var(--on-dark-soft); }
@@ -964,7 +981,7 @@ a.chip:hover { text-decoration: none; border-color: currentColor; }
 
 @media (max-width: 900px) {
   :root { --gutter: 24px; }
-  .brief-nav, .masthead-search, .masthead .nova-social-link, .masthead .btn { display: none; }
+  .brief-nav, .masthead-search, .masthead .nova-social-link, .masthead .btn, .masthead .x-icon-link { display: none; }
   .nav-toggle { display: inline-flex; }
   .killer-stats { grid-template-columns: 1fr; gap: 32px; }
   .focus-grid { grid-template-columns: 1fr; }
