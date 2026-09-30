@@ -5,25 +5,13 @@ name: Rebuild Nova Brief pages
 # with Supabase, so publishing/editing in the admin doesn't need someone
 # to run `npm run build` by hand.
 #
-# Fires two ways:
-#  - repository_dispatch "brief-published": pushed the instant an article's
-#    status becomes 'published', by a Supabase trigger (see
-#    supabase/notify-publish.sql) so new content rebuilds within seconds
-#    instead of waiting on the schedule below.
-#  - schedule: a safety net. GitHub deprioritises cron on quiet repos, so
-#    in practice this runs every few hours rather than every 30 minutes —
-#    it exists to catch anything the trigger missed, not as the primary path.
-#
-# This does NOT reach the live cPanel subdomain on its own — either click
-# "Update from Remote" + "Deploy HEAD Commit" in cPanel Git Version
-# Control, or add a cPanel Cron Job that pulls + copies dist/ into the
-# document root on a tight schedule (see brief/README.md → Deploy).
+# This does NOT reach the live cPanel subdomain — the cPanel Git Version
+# Control repo still needs "Update from Remote" + "Deploy HEAD Commit"
+# (or a webhook) to copy new files into the document root.
 #
 # Delete this file to turn the automation off; the manual
 # build / commit / deploy flow still works.
 on:
-  repository_dispatch:
-    types: [brief-published]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch: {}
