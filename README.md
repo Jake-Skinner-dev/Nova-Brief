@@ -103,10 +103,24 @@ its own cPanel Git Version Control clone, independent of the one serving
 **Update flow:** `npm run build` → commit (incl. `dist/`) → push → Deploy
 HEAD Commit in the cPanel repo.
 
-*Optional automation:* `.github/workflows/rebuild.yml` rebuilds `dist/`
-every 30 minutes and commits it if published content changed (so
-publishing in the admin doesn't need a manual build). Delete the file to
-turn it off.
+*Automation:* `.github/workflows/rebuild.yml` rebuilds `dist/` and commits
+it whenever published content changes. It fires two ways — instantly via a
+Supabase trigger (`supabase/notify-publish.sql` — a one-time setup that
+needs a GitHub token, see the comments in that file) the moment an article
+is published, and as a schedule (every 30 min in theory; GitHub
+deprioritises cron on quiet repos, so in practice every few hours) as a
+safety net. Either way, it only updates the **repo** — the live site still
+needs deploying.
+
+*Removing the manual deploy click too:* add a cPanel **Cron Job** that
+pulls and copies `dist/` into the document root every few minutes:
+
+```bash
+cd /home/o5l9nmc9gw7j/repositories/Nova-Brief && git pull origin main -q && cp -R dist/. /home/o5l9nmc9gw7j/public_html/brief.novasocial.co.uk/ && cp -f public/.htaccess /home/o5l9nmc9gw7j/public_html/brief.novasocial.co.uk/.htaccess
+```
+
+With both in place, a published article goes from database → live site
+within minutes, with nobody clicking anything.
 
 ## 6. Writing in the CMS
 
