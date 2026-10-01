@@ -12,6 +12,8 @@ name: Rebuild Nova Brief pages
 # Delete this file to turn the automation off; the manual
 # build / commit / deploy flow still works.
 on:
+  repository_dispatch:
+    types: [brief-published]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch: {}
