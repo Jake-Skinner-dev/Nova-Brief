@@ -113,6 +113,12 @@
 
   .editor-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
   .editor-head .spacer { margin-left: auto; }
+  .views-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding-top: 8px; }
+  .views-chart .vc-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; min-width: 0; }
+  .views-chart .vc-bar { width: 100%; background: var(--peach); border-radius: 5px 5px 2px 2px; min-height: 3px; }
+  .views-chart .vc-num { font-size: 10.5px; color: var(--ink-faint); }
+  .views-chart .vc-day { font-size: 10px; color: var(--ink-faint); white-space: nowrap; }
+  .vcount { font-family: var(--fh); font-weight: 800; font-size: 13px; white-space: nowrap; }
   .divider { height: 1px; background: var(--rule); margin: 22px 0; }
   .sub-head { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; margin: 4px 0 12px; }
   .check { display: flex; align-items: center; gap: 8px; font-size: 14px; }
@@ -195,6 +201,17 @@
     <!-- OVERVIEW -->
     <section id="tab-overview">
       <div class="stat-grid" id="stat-grid"></div>
+
+      <div class="card" id="views-card" style="margin-bottom:16px;">
+        <h3 style="font-size:15px;">Article views</h3>
+        <p class="hint" id="views-hint" style="margin-bottom:14px;">One view is counted per reader per article per browser session. Your own visits while signed in to the editor aren&rsquo;t counted.</p>
+        <div class="stat-grid" id="views-tiles" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;"></div>
+        <p class="sub-head">Last 14 days</p>
+        <div class="views-chart" id="views-chart"></div>
+        <p class="sub-head" style="margin-top:20px;">Top articles &middot; last 30 days</p>
+        <div class="activity" id="top-articles"></div>
+      </div>
+
       <div class="card">
         <h3 style="font-size:15px;">Recent activity</h3>
         <p class="hint" style="margin-bottom:12px;">The last articles you touched. Published pages appear on the live site after the next site build &amp; deploy.</p>
@@ -215,6 +232,11 @@
             <option value="scheduled">Scheduled</option>
             <option value="published">Published</option>
             <option value="archived">Archived</option>
+          </select>
+          <select id="article-sort">
+            <option value="recent">Sort: recently edited</option>
+            <option value="views30">Sort: most viewed (30 days)</option>
+            <option value="viewsall">Sort: most viewed (all time)</option>
           </select>
           <div class="spacer"></div>
           <button type="button" class="btn btn-peach btn-sm" id="new-article">+ New article</button>

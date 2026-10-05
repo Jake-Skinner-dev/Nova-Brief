@@ -435,7 +435,7 @@ ${(a.tags || []).map((t) => `<meta property="article:tag" content="${attr(t)}" /
       description: desc,
       canonical: url,
       headExtra,
-      bodyAttrs: `data-page="article" data-section="${slugify(a.category || "news").replace(/-.*$/, "")}"`,
+      bodyAttrs: `data-page="article" data-slug="${attr(slug)}" data-section="${slugify(a.category || "news").replace(/-.*$/, "")}"`,
       inner: articleInner(a, related)
     });
     writeFileSync(join(distDir, `${slug}.html`), html, "utf-8");

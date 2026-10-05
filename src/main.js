@@ -646,6 +646,27 @@ async function initSearch() {
 /* ===================================================================
    Boot
    =================================================================== */
+/* ===================================================================
+   Article view counter — one count per article per browser session.
+   Calls brief_track_view (public RPC; it can only bump a counter and
+   ignores anything that isn't a published article). Skipped in dev, for
+   bots that report webdriver, and for the signed-in editor (the admin
+   sets a localStorage flag) so your own previews don't inflate numbers.
+   =================================================================== */
+async function trackArticleView() {
+  const slug = body.dataset.slug;
+  if (!slug || DEV || navigator.webdriver) return;
+  try {
+    if (localStorage.getItem("nova-brief-editor") === "1") return;
+    const key = "nb-viewed:" + slug;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+  } catch {}
+  const { error } = await supabase.rpc("brief_track_view", { p_slug: slug });
+  if (error) console.warn("[nova-brief] view not counted:", error.message);
+}
+
 if (page === "home") hydrateHome().catch((e) => console.warn("[nova-brief]", e));
 if (page === "section") hydrateSection().catch((e) => console.warn("[nova-brief]", e));
+if (page === "article") trackArticleView();
 if (page === "search") initSearch().catch((e) => console.warn("[nova-brief]", e));

@@ -61,6 +61,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 });
 
 document.getElementById("logout-btn").addEventListener("click", async () => {
+  try { localStorage.removeItem("nova-brief-editor"); } catch {}
   await sb.auth.signOut();
   showView("login");
 });
@@ -194,8 +195,11 @@ function pill(status) {
 
 /* ============================================================ LOAD ALL */
 async function loadAll() {
+  // Same origin as the public site, so this tells the view counter to ignore the editor.
+  try { localStorage.setItem("nova-brief-editor", "1"); } catch {}
   await Promise.all([
     loadOverview(),
+    loadViews(),
     loadArticles(),
     loadStats(),
     loadEditions(),
@@ -203,6 +207,105 @@ async function loadAll() {
     loadAdEnquiries(),
     loadBrands()
   ]);
+}
+
+/* ------------------------------------------------------------- VIEWS */
+// slug -> { total, views_7d, views_30d }. Filled from the editor-only RPCs
+// defined in supabase/article-views.sql.
+let VIEWSTATS = new Map();
+let VIEWDAILY = [];
+let VIEWS_ERROR = null;
+
+async function loadViews() {
+  const [stats, daily] = await Promise.all([
+    sb.rpc("brief_article_view_stats"),
+    sb.rpc("brief_view_daily", { p_days: 14 })
+  ]);
+  VIEWS_ERROR = stats.error || daily.error || null;
+  VIEWSTATS = new Map(
+    (stats.data || []).map((r) => [
+      r.slug,
+      { total: Number(r.total), views_7d: Number(r.views_7d), views_30d: Number(r.views_30d) }
+    ])
+  );
+  VIEWDAILY = (daily.data || []).map((r) => ({ day: r.day, views: Number(r.views) }));
+  renderViewsOverview();
+  renderArticleList();
+}
+
+function renderViewsOverview() {
+  const tiles = document.getElementById("views-tiles");
+  const chart = document.getElementById("views-chart");
+  const top = document.getElementById("top-articles");
+  const hint = document.getElementById("views-hint");
+  if (!tiles) return;
+  tiles.innerHTML = "";
+  chart.innerHTML = "";
+  top.innerHTML = "";
+
+  if (VIEWS_ERROR) {
+    hint.textContent =
+      "View counting isn't set up yet — run supabase/article-views.sql in the Supabase SQL Editor (error: " +
+      VIEWS_ERROR.message +
+      ").";
+    return;
+  }
+
+  let total = 0, v7 = 0, v30 = 0;
+  VIEWSTATS.forEach((v) => {
+    total += v.total;
+    v7 += v.views_7d;
+    v30 += v.views_30d;
+  });
+  [
+    [v7, "Views · 7 days"],
+    [v30, "Views · 30 days"],
+    [total, "Views · all time"]
+  ].forEach(([n, l]) =>
+    tiles.appendChild(
+      el("div", { class: "stat-box" }, [
+        el("div", { class: "n", text: n.toLocaleString() }),
+        el("div", { class: "l", text: l })
+      ])
+    )
+  );
+
+  const max = Math.max(1, ...VIEWDAILY.map((d) => d.views));
+  VIEWDAILY.forEach((d) => {
+    const date = new Date(d.day);
+    const label = date.toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+    const bar = el("div", { class: "vc-bar", title: `${label}: ${d.views} view${d.views === 1 ? "" : "s"}` });
+    bar.style.height = Math.max(3, Math.round((d.views / max) * 84)) + "px";
+    chart.appendChild(
+      el("div", { class: "vc-col" }, [
+        el("span", { class: "vc-num", text: d.views ? String(d.views) : "" }),
+        bar,
+        el("span", { class: "vc-day", text: String(date.getUTCDate()) })
+      ])
+    );
+  });
+
+  const bySlug = new Map(ARTICLES.map((a) => [a.slug, a]));
+  const ranked = [...VIEWSTATS.entries()]
+    .filter(([, v]) => v.views_30d > 0)
+    .sort((a, b) => b[1].views_30d - a[1].views_30d)
+    .slice(0, 8);
+  if (!ranked.length) {
+    top.appendChild(
+      el("p", { class: "hint", text: "No views recorded yet — they'll appear here as people read articles on the live site." })
+    );
+    return;
+  }
+  ranked.forEach(([slug, v]) => {
+    const a = bySlug.get(slug);
+    top.appendChild(
+      el("div", { class: "a-row" }, [
+        el("span", { class: "a-t", text: a ? a.headline : "/" + slug }),
+        el("span", { class: "vcount", text: v.views_30d.toLocaleString() + " · 30d" }),
+        el("span", { class: "a-d", text: v.total.toLocaleString() + " total" })
+      ])
+    );
+  });
 }
 
 /* ---------------------------------------------------------- OVERVIEW */
@@ -288,6 +391,7 @@ async function loadArticles() {
     return;
   }
   ARTICLES = data || [];
+  renderViewsOverview();
   renderArticleList();
 }
 
@@ -305,8 +409,18 @@ function renderArticleList() {
     list.appendChild(el("p", { class: "hint", text: "No articles match." }));
     return;
   }
+  const sort = document.getElementById("article-sort").value;
+  if (sort !== "recent") {
+    const key = sort === "views30" ? "views_30d" : "total";
+    rows.sort((x, y) => (VIEWSTATS.get(y.slug)?.[key] || 0) - (VIEWSTATS.get(x.slug)?.[key] || 0));
+  }
   rows.forEach((a) => {
-    const meta = el("div", { class: "r-meta", text: `${a.category || "—"} · ${a.content_type || "—"} · /${a.slug || slugify(a.headline)}` });
+    const vs = VIEWSTATS.get(a.slug);
+    const viewsText =
+      a.status === "published"
+        ? ` · ${(vs?.total || 0).toLocaleString()} views${vs && vs.views_7d ? ` (${vs.views_7d.toLocaleString()} this week)` : ""}`
+        : "";
+    const meta = el("div", { class: "r-meta", text: `${a.category || "—"} · ${a.content_type || "—"} · /${a.slug || slugify(a.headline)}${viewsText}` });
     const actions = el("div", { class: "r-actions" }, [
       el("button", { type: "button", class: "btn btn-ghost btn-sm", text: "Edit" })
     ]);
@@ -326,6 +440,7 @@ function renderArticleList() {
 }
 document.getElementById("article-search").addEventListener("input", renderArticleList);
 document.getElementById("article-status-filter").addEventListener("change", renderArticleList);
+document.getElementById("article-sort").addEventListener("change", renderArticleList);
 
 function showArticleList() {
   document.getElementById("article-editor-view").hidden = true;
